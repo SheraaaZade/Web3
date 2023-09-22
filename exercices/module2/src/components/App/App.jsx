@@ -3,10 +3,12 @@ import Button from "components/Button/Button"
 import { useState } from "react"
 
 const App = () => {
-    const [counter, setCounter] = useState(0)
+    const [counter, setCounter] = useState(JSON.parse(localStorage.getItem("counter")) || 0)
     
     const changeCount = (delta) => {
-        setCounter(counter + parseInt(delta));
+        localStorage.setItem("counter", JSON.stringify(counter + delta));
+        setCounter(counter + delta);
+        
     };
 
     return (
@@ -14,7 +16,7 @@ const App = () => {
             <Display counter={counter} />
             <Button changeCount={changeCount} text="Incrémenter" delta={1} />
             <Button changeCount={changeCount} text="Décrémenter" delta={-1} />
-            <Button changeCount={changeCount} text="Reset" delta={-counter.toString()} />
+            <Button changeCount={changeCount} text="Reset" delta={-counter} />
         </div>
     );
 };
