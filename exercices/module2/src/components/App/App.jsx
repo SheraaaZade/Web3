@@ -4,35 +4,19 @@ import { useState } from "react"
 
 const App = () => {
     const [counter, setCounter] = useState(0)
-
-    console.log('rendering with counter value', counter)
-
-    const increaseByOne = () => {
-
-        console.log('increasing, value before', counter)
-        setCounter(counter + 1)
-    }
-
-    const decreaseByOne = () => {
-
-        console.log('decreasing, value before', counter)
-        setCounter(counter - 1)
-    }
-
-    const setToZero = () => {
-
-        console.log('resetting to zero, value before', counter)
-        setCounter(0)
-    }
+    
+    const changeCount = (delta) => {
+        setCounter(counter + parseInt(delta));
+    };
 
     return (
         <div>
             <Display counter={counter} />
-            <Button handleClick={increaseByOne} text="plus" />
-            <Button handleClick={setToZero} text="zero" />
-            <Button handleClick={decreaseByOne} text="minus" />
+            <Button changeCount={changeCount} text="Incrémenter" delta={1} />
+            <Button changeCount={changeCount} text="Décrémenter" delta={-1} />
+            <Button changeCount={changeCount} text="Reset" delta={-counter.toString()} />
         </div>
-    )
-}
+    );
+};
 
 export default App;
