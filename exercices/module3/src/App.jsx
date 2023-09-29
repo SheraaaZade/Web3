@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import Note from './components/Note'
+
 
 // const History = (props) => {
 //   if (props.allClicks.length === 0) {
@@ -65,27 +67,42 @@ import './App.css'
 //   )
 // }
 
-const Button = (props) => (
-  <button onClick={props.handleClick}>
-    {props.text}
-  </button>
-)
+// const Button = (props) => (
+//   <button onClick={props.handleClick}>
+//     {props.text}
+//   </button>
+// )
 
-const App = () => {
-  const [value, setValue] = useState(10)
+// const App = () => {
+//   const [value, setValue] = useState(10)
 
-  const setToValue = (newValue) => {
-    console.log('value now', newValue)
-    setValue(newValue)
-  }
+//   const setToValue = (newValue) => {
+//     console.log('value now', newValue)
+//     setValue(newValue)
+//   }
 
+//   return (
+//     <div>
+//       {value}
+//       <Button handleClick={() => setToValue(1000)} text="thousand" />
+//       <Button handleClick={() => setToValue(0)} text="reset" />
+//       <Button handleClick={() => setToValue(value + 1)} text="increment" />
+//     </div>
+//   )
+// }
+
+
+const App = ({ notes }) => {
   return (
     <div>
-      {value}
-      <Button handleClick={() => setToValue(1000)} text="thousand" />
-      <Button handleClick={() => setToValue(0)} text="reset" />
-      <Button handleClick={() => setToValue(value + 1)} text="increment" />
+      <h1>Notes</h1>
+      <ul>
+        {notes.map(note =>
+          <Note key={note.id} note={note} />
+        )}
+      </ul>
     </div>
   )
 }
+
 export default App
