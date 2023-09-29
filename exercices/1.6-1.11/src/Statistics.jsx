@@ -1,33 +1,28 @@
-import React from "react";
+import React from 'react';
+import StatisticLine from './StatisticLine';
 
 const Statistics = ({ good, neutral, bad }) => {
-    const totalFeedback = good + neutral + bad;
-    const averageScore = (good - bad) / totalFeedback;
-    const positiveFeedbackPercentage = (good / totalFeedback) * 100;
+    const total = good + neutral + bad;
+    const average = total === 0 ? 0 : (good - bad) / total;
+    const positivePercentage = total === 0 ? 0 : (good / total) * 100;
 
-    if (good === 0 && bad === 0 && neutral === 0) {
-
-        return (<div>
+    return (
+        <div>
             <h2>Statistics</h2>
-            <p>No feedback given                                                                                                            .</p>
+            {total === 0 ? (
+                <p>No feedback given yet</p>
+            ) : (
+                <div>
+                    <StatisticLine text="Good" value={good} />
+                    <StatisticLine text="Neutral" value={neutral} />
+                    <StatisticLine text="Bad" value={bad} />
+                    <StatisticLine text="Total" value={total} />
+                    <StatisticLine text="Average" value={average.toFixed(2)} />
+                    <StatisticLine text="Positive feedback" value={`${positivePercentage.toFixed(2)}%`} />
+                </div>
+            )}
         </div>
-        )
-
-    } else {
-
-        return (
-            <div>
-                <h2>Statistics</h2>
-
-                <p>Total feedback: {totalFeedback}</p>
-                <p>Average score: {isNaN(averageScore) ? 0 : averageScore.toFixed(2)}</p>
-                <p>Positive feedback percentage: {isNaN(positiveFeedbackPercentage) ? 0 : positiveFeedbackPercentage.toFixed(2)}%</p>
-
-            </div>
-        )
-
-
-    }
-}
+    );
+};
 
 export default Statistics;
