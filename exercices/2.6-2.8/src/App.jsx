@@ -13,7 +13,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     const personExists = persons.some(
-      person => person.name === newName
+      person => person.name.toLowerCase() === newName.toLowerCase().trim()
     )
 
     if (!personExists && newName.trim() !== '') {
