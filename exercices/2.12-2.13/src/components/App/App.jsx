@@ -5,8 +5,6 @@ import Person from "components/Person/Person"
 import FilterPersons from 'components/FilterPersons/FilterPersons'
 import PersonsAPI from "services/persons"
 
-
-
 const App = () => {
 
   const [persons, setPersons] = useState([])
