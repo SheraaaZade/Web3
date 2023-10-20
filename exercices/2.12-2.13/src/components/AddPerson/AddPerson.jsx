@@ -1,15 +1,13 @@
 import React, { useState } from "react"
 
-
-
-const AddPerson = ({ upsertPerson }) => {
+const AddPerson = ({ createPerson }) => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
   const handleAddPerson = (event) => {
     event.preventDefault()
-    upsertPerson({ name: newName, number: newNumber })
+    createPerson({ name: newName, number: newNumber })
     setNewName('')
     setNewNumber('')
   }
