@@ -10,9 +10,13 @@
     "preview": "vite preview",
     "server": "json-server -p3001 --watch db.json"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
