@@ -1,17 +1,18 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
+const Note = require('./models/note')
 
 app.use(express.json())
 
-const password = process.argv[2]
+const mongodbUri = process.env.MONGODB_URI;
+const PORT = process.env.PORT || 3000;
 
-// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-const url =
-`mongodb+srv://chehrazadouazzani:${password}@helloworld.atoynja.mongodb.net/noteApp?retryWrites=true&w=majority`
-
-mongoose.set('strictQuery',false)
-mongoose.connect(url)
+mongoose.connect(mongodbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const noteSchema = new mongoose.Schema({
   content: String,
@@ -22,7 +23,15 @@ const noteSchema = new mongoose.Schema({
   }
 })
 
-const Note = mongoose.model('Note', noteSchema)
+// const Note = mongoose.model('Note', noteSchema)
+
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
 
 app.get('/api/notes', (request, response) => {
   Note.find({}).then(notes => {
@@ -32,6 +41,12 @@ app.get('/api/notes', (request, response) => {
     response.status(500).json({ error: 'Internal Server Error' });
   });
 });
+
+app.get('/api/notes/:id', (request, response) => {
+  Note.findById(request.params.id).then(note => {
+    response.json(note)
+  })
+})
 
 app.post('/api/notes', (request, response) => {
   const body = request.body;
@@ -53,8 +68,6 @@ app.post('/api/notes', (request, response) => {
   });
 });
 
-
-const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
